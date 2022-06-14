@@ -1,0 +1,839 @@
+{
+	"info": {
+		"_postman_id": "46880bc2-eca8-45d0-a675-e5fee55e60ab",
+		"name": "sns-backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "store",
+			"item": [
+				{
+					"name": "get all store",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/store/info?status=active",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"store",
+								"info"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "active"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add store",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Walmart Jacobs\", \"address\": \"335 Farmers Market Rd\", \"city\": \"Waterloo\", \"pincode\": \"N2V0A4\", \"active\": \"Y\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/store/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"store",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update store status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/store/storestatus/3?makestatus=active",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"store",
+								"storestatus",
+								"3"
+							],
+							"query": [
+								{
+									"key": "makestatus",
+									"value": "active"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get store by city",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/store/info/city/Kitchener",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"store",
+								"info",
+								"city",
+								"Kitchener"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get store by storeid",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{user1}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/store/info/92",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"store",
+								"info",
+								"92"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "add product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \n        \"name\": \"WaterBottle\",\n        \"description\": \"This is Canadian water\",\n        \"price\": \"2.50\",\n        \"brand\": \"Nestle\",\n        \"imagelink\": \"http://sitafla.com\",\n        \"weight\": \"12.00\",\n        \"storeid\": 6,\n        \"active\":\"Y\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/product/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"product",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/product/info",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"product",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get products by store",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/store/info/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"store",
+								"info",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{user1}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/product/productstatus/3?makestatus=active",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"product",
+								"productstatus",
+								"3"
+							],
+							"query": [
+								{
+									"key": "makestatus",
+									"value": "active"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "add order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderDetails\":{\n        \"orderedby\":1,\n        \"storeid\": 3,\n        \"description\": \"this is the order\",\n        \"tipamount\": 2,\n        \"orderamount\": 10\n    },\n\n    \"orderItems\":[\n        {\n            \"productid\": 3,\n            \"quantity\": 2,\n            \"price\": 5\n        },\n        {\n            \"productid\":4,\n            \"quantity\": 1,\n            \"price\": 5\n        }\n    ],\n    \"group\":[1]\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/order/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get order by placer id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/order/placer/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"placer",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get order by group id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/order/group/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"group",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get order by store id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/order/store/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"store",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get order by acceptor id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/order/acceptor/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"acceptor",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accept order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{user2}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderid\":46,\n    \"acceptorid\":7\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/order/accept",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"accept"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancel order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderid\":33,\n    \"rejectorid\":1\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/order/cancel",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkout order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderid\":46,\n    \"acceptorid\":7\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/order/checkout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "complete order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{user1}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderid\":46,\n    \"acceptorid\":7,\n    \"placerid\":null\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/order/complete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"order",
+								"complete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "create user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token sdf",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"testuser2@test.com\",\n    \"name\": \"Test user2\",\n    \"mobile\": \"+177567312\",\n    \"address\": \"Test Address\",\n    \"city\": \"Kitchener\",\n    \"pincode\": \"N2M 5H3\",\n    \"password\": \"test123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "MyProfile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 593a22e7f8accbd080df910b4d3e0a3e8b092dff",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/myprofile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"myprofile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"testuser2@test.com\",\n    \"password\": \"test123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OtherUser",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b014aa9861c02b46712c99f45ae1ebc713af8531",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/otheruser/?id=8",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"otheruser",
+								""
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 593a22e7f8accbd080df910b4d3e0a3e8b092dff",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test modified\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/myprofile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"myprofile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get details of home page",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 593a22e7f8accbd080df910b4d3e0a3e8b092dff",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/home/8",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"home",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "group",
+			"item": [
+				{
+					"name": "get groups by user id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 0ba638a045174bf182d85ac68f41787ca4863d4d",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/mygroups/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"mygroups",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search group for joining",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 593a22e7f8accbd080df910b4d3e0a3e8b092dff",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/searchGroup/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"searchGroup",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "group Copy",
+			"item": [
+				{
+					"name": "get group for joining",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 593a22e7f8accbd080df910b4d3e0a3e8b092dff",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"groupid\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/joinGroup/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"joinGroup",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "invite",
+			"item": [
+				{
+					"name": "get invites by admin id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{user1}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/invite/admin/7",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"invite",
+								"admin",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accept reject invite",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\":\"accepted\",\n    \"groupid\":1,\n    \"userid\":2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/invite/decision/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"invite",
+								"decision",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get my pending invites",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{user1}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/invite/user/7",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"invite",
+								"user",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

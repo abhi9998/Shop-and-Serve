@@ -1,0 +1,23 @@
+FROM python:3.8
+
+# Run python in un-buffered mode. 
+# It causes all output to stdout to be flushed immediately - for precise debugging of python app
+ARG INSTANCE_TYPE
+
+ENV PYTHONUNBUFFERED 1
+
+ENV instance_type=$INSTANCE_TYPE
+
+ADD . /ece651-sns
+
+WORKDIR /ece651-sns
+
+RUN pip install --upgrade pip
+
+RUN pip install --upgrade setuptools
+
+RUN pip install -r /ece651-sns/requirements.txt
+
+RUN pip install requests
+
+RUN pip install -U pytest

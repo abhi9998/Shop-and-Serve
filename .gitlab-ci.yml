@@ -1,0 +1,45 @@
+image: docker:latest
+
+stages:
+    - test
+    - deploy
+
+test:
+    stage: test
+    tags:
+        - test
+    script:
+        - docker-compose -f docker-compose-simulator.yml stop
+        - docker-compose -f docker-compose-simulator.yml up --build -d
+        - docker-compose -f docker-compose-simulator.yml run app python manage.py wait_for_db
+        - docker-compose -f docker-compose-simulator.yml run app python manage.py wait_for_server
+        - docker-compose -f docker-compose-simulator.yml run app python manage.py migrate
+        - docker-compose -f docker-compose-simulator.yml run app sh -c "coverage run manage.py test sns/apps --verbosity 3 --testrunner html_test_reporter.HtmlTestReporter && coverage report && coverage html && python send_report.py"
+        - docker-compose -f docker-compose-simulator.yml run app python inputer.py db # Import test data
+        - docker-compose -f docker-compose-simulator.yml stop
+
+deploy:
+    stage: deploy
+    tags:
+        - build
+    script:
+        - >
+            docker build 
+            --build-arg DB_ENGINE 
+            --build-arg DB_HOST 
+            --build-arg DB_NAME 
+            --build-arg DB_PASS 
+            --build-arg DB_USER 
+            --build-arg DB_PORT 
+            -f Dockerfile 
+            --iidfile imageid.txt 
+            -t registry.heroku.com/ece651-sns-qa/web .
+        - docker login -u _ -p $HEROKU_TOKEN registry.heroku.com
+        - docker push registry.heroku.com/ece651-sns-qa/web
+        - echo "e"# apk add --no-cache curl
+        - echo "Docker Image ID is $(cat imageid.txt)"
+        - |-
+            curl -X PATCH https://api.heroku.com/apps/ece651-sns-qa/formation --header "Content-Type: application/json" --header "Accept: application/vnd.heroku+json; version=3.docker-releases" --header "Authorization: Bearer ${HEROKU_TOKEN}" --data '{ "updates": [ { "type": "web", "docker_image": "'$(cat imageid.txt)'" } ] }'
+    only:
+        - QA_branch
+    
